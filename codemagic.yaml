@@ -1,4 +1,5 @@
 workflows:
+ios-upload:
 ios-distribute:
 name: iOS Distribute
 environment:
