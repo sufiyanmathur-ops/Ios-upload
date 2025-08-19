@@ -1,0 +1,23 @@
+workflows:
+  upload_ipa_from_drive:
+    name: Upload IPA from Google Drive
+    instance_type: mac_mini_m2
+    max_build_duration: 30
+    environment:
+      variables:
+        IPA_URL: "https://drive.google.com/uc?export=download&id=1tWp4wRAHNiCOp204B1EM9ypj_FwG2AHP"
+        APPLE_ID: "replace-with-your-apple-id@example.com"
+        APP_SPECIFIC_PASSWORD: "replace-with-your-app-specific-password"
+    scripts:
+      - name: Download IPA from Google Drive
+        script: |
+          mkdir -p build/ios/ipa
+          curl -L "$IPA_URL" -o build/ios/ipa/app.ipa
+          echo "✅ IPA downloaded:"
+          ls -lh build/ios/ipa
+    publishing:
+      app_store_connect:
+        auth: apple_id
+        apple_id: $APPLE_ID
+        password: $APP_SPECIFIC_PASSWORD
+        submit_to_testflight: true
